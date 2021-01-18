@@ -66,4 +66,4 @@ for epoch in args.epochs:
     print('Adj mean {}, min {}, max {}'.format(np.mean(adj), np.min(adj), np.max(adj)))
 
     ''' Write adjacency to binary. To use as DIPHA input for persistence homology '''
-    save_dipha(SAVE_DIR + 'adj_epc{}_trl{}.bin'.format(epoch, args.trial), 1-adj)
+    save_dipha(SAVE_DIR + 'adj_epc{}_trl{}.bin'.format(epoch, args.trial), adj)

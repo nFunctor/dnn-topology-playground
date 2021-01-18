@@ -89,17 +89,17 @@ def adjacency(signals, metric=None):
 
     ''' If no metric provided fast-compute correlation  '''
     if not metric:
-        return np.abs(np.nan_to_num(np.corrcoef(signals)))
+        return np.sqrt(1-np.abs(np.nan_to_num(np.corrcoef(signals))))
         
     n, m = signals.shape
     A = np.zeros((n, n))
 
     for i in range(n):
-        for j in range(n):
+        for j in range(i+1,n):
             A[i,j] = metric(signals[i], np.transpose(signals[j]))
 
     ''' Normalize '''
-    A = robust_scaler(A)
+    #A = robust_scaler(A)
             
     return np.abs(np.nan_to_num(A))
 
