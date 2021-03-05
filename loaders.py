@@ -13,7 +13,8 @@ import torchvision
 from torch.utils.data import *
 import random
 import numpy as np
-
+from typing import Optional
+from random_loader import RandomLoader
 
 TRANSFORMS_TR = transforms.Compose([
     transforms.RandomCrop(28, padding=4),
@@ -123,7 +124,14 @@ TRANSFORMS_MNIST = transforms.Compose([
     transforms.Normalize((0.1307,), (0.3081,))])
 
 
-def loader(data, batch_size, subset=[], sampling=-1):
+def loader(
+        data,
+        batch_size,
+        subset=[],
+        sampling=-1,
+        row_count: Optional[int] = None,
+        dim: Optional[int] = None
+):
     ''' Interface to the dataloader function '''
     if data == 'mnist_train':
         return dataloader('mnist', './data', train=True, transform=TRANSFORMS_MNIST, batch_size=batch_size, sampling=sampling, num_workers=2, subset=subset)
@@ -171,7 +179,8 @@ def loader(data, batch_size, subset=[], sampling=-1):
     elif data == 'imagenet_test':
         return dataloader('tinyimagenet', '/data/data1/datasets/tiny-imagenet-200/val/images/',
                                  train=False, transform=TRANSFORMS_TE_IMAGENET, batch_size=batch_size, sampling=sampling, num_workers=2, subset=subset)
-
+    elif data == "random":
+        return RandomLoader(dim, row_count)
     
 def get_dataset(data, path, train, transform):
     ''' Return loader for torchvision data. If data in [mnist, cifar] torchvision.datasets has built-in loaders else load from ImageFolder '''
