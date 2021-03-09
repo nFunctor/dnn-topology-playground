@@ -25,6 +25,8 @@ parser.add_argument('--fixed_init', default=0, type=int)
 parser.add_argument('--train_batch_size', default=128, type=int)
 parser.add_argument('--test_batch_size', default=100, type=int)
 parser.add_argument('--input_size', default=32, type=int)
+parser.add_argument('--dim', default=2, type=int)
+parser.add_argument('--row_count', default=1024, type=int)
 parser.add_argument('--subset', default=0, type=float)
 args = parser.parse_args()
 
@@ -36,11 +38,30 @@ best_acc = 0  # best test accuracy
 start_epoch = 1  # start from epoch 1 or last checkpoint epoch
 
 ''' Prepare loaders '''
-trainloader = loader(args.dataset+'_train', batch_size=args.train_batch_size, sampling=args.binarize_labels)
+trainloader = loader(
+    args.dataset+'_train',
+    batch_size=args.train_batch_size,
+    sampling=args.binarize_labels,
+    dim=args.dim,
+    row_count=args.row_count
+)
 n_samples = len(trainloader)*args.train_batch_size
 subset = list(np.random.choice(n_samples, int(args.subset*n_samples)))
-subsettrainloader = loader(args.dataset+'_train', batch_size=args.train_batch_size, subset=subset, sampling=args.binarize_labels)
-testloader = loader(args.dataset+'_test', batch_size=args.test_batch_size, sampling=args.binarize_labels)
+subsettrainloader = loader(
+    args.dataset+'_train',
+    batch_size=args.train_batch_size,
+    subset=subset,
+    sampling=args.binarize_labels,
+    dim=args.dim,
+    row_count=args.row_count
+)
+testloader = loader(
+    args.dataset+'_test',
+    batch_size=args.test_batch_size,
+    sampling=args.binarize_labels,
+    dim=args.dim,
+    row_count=args.row_count
+)
 criterion  = get_criterion(args.dataset)
 
 ''' Build models '''

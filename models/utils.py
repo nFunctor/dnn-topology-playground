@@ -4,7 +4,8 @@ from .resnet import *
 from .alexnet import *
 from .densenet import *
 from .inception import *
-from .conv_x import * 
+from .conv_x import *
+from models.playground import Playground
 
 
 
@@ -64,7 +65,8 @@ def get_model(name, dataset):
         net = AlexNet(num_classes=10)
     if name=='alexnet' and dataset=='imagenet':
         net = AlexNet(num_classes=200)
-
+    if name == "playground":
+        net = Playground([2, 3, 2])
     return net
 
 

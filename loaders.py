@@ -179,8 +179,13 @@ def loader(
     elif data == 'imagenet_test':
         return dataloader('tinyimagenet', '/data/data1/datasets/tiny-imagenet-200/val/images/',
                                  train=False, transform=TRANSFORMS_TE_IMAGENET, batch_size=batch_size, sampling=sampling, num_workers=2, subset=subset)
-    elif data == "random":
-        return RandomLoader(dim, row_count)
+    elif data in {"random_train", "random_test"}:
+        return DataLoader(
+            TensorDataset(
+                torch.rand(row_count * dim).view((row_count, dim)),
+                torch.randint(2, [row_count])
+            )
+        )
     
 def get_dataset(data, path, train, transform):
     ''' Return loader for torchvision data. If data in [mnist, cifar] torchvision.datasets has built-in loaders else load from ImageFolder '''
