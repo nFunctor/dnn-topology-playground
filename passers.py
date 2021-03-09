@@ -90,7 +90,10 @@ class Passer():
             outputs = self.network(inputs)
             
             if forward=='selected':
-                features.append([f.cpu().data.numpy().astype(np.float16) for f in self.network.module.forward_features(inputs)])
+               #if CUDA use
+               #features.append([f.cpu().data.numpy().astype(np.float16) for f in self.network.module.forward_features(inputs)])
+               features.append(
+                   [f.cpu().data.numpy().astype(np.float16) for f in self.network.forward_features(inputs)])
             elif forward=='parametric':
                 features.append([f.cpu().data.numpy().astype(np.float16) for f in self.network.forward_param_features(inputs)])
                 

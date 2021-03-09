@@ -5,4 +5,5 @@ checkpoint/
 data/
 losses/
 venv/
+/openmpi-4.0.4
 .idea/
