@@ -13,7 +13,11 @@ class Playground(nn.Module):
             layers.append(
                 torch.nn.Linear(layer_dims[i - 1], layer_dims[i], True)
             )
-            layers.append(torch.nn.ReLU())
+            if (i < layer_count-1):
+                layers.append(torch.nn.ReLU())
+            else:
+                layers.append(torch.nn.Softmax(dim=1))
+
             self.layers.append(torch.nn.Sequential(*layers))
         self.net = torch.nn.Sequential(*layers)
 

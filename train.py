@@ -25,9 +25,11 @@ parser.add_argument('--fixed_init', default=0, type=int)
 parser.add_argument('--train_batch_size', default=128, type=int)
 parser.add_argument('--test_batch_size', default=100, type=int)
 parser.add_argument('--input_size', default=32, type=int)
-parser.add_argument('--dim', default=2, type=int)
+parser.add_argument('--dim', default=4, type=int)
 parser.add_argument('--row_count', default=1024, type=int)
+parser.add_argument('--playground_layers', nargs='+', type=int)
 parser.add_argument('--subset', default=0, type=float)
+
 args = parser.parse_args()
 
 SAVE_EPOCHS = list(range(11)) + list(range(10, args.epochs+1, args.save_every)) # At what epochs to save train/test stats
@@ -66,7 +68,8 @@ criterion  = get_criterion(args.dataset)
 
 ''' Build models '''
 print('==> Building model..')
-net = get_model(args.net, args.dataset)
+
+net = get_model(args.net, args.dataset, args.playground_layers)
 print(net)
 net = net.to(device)
    

@@ -18,7 +18,7 @@ num_classes={'mnist':10,
          'vgg_cifar10_adversarial':10}
 
 
-def get_model(name, dataset):
+def get_model(name, dataset, playground_layers):
     if name == 'conv_2':
         net = Conv_2(num_classes=10)
     if name == 'conv_4':
@@ -66,7 +66,7 @@ def get_model(name, dataset):
     if name=='alexnet' and dataset=='imagenet':
         net = AlexNet(num_classes=200)
     if name == "playground":
-        net = Playground([2, 3, 2])
+        net = Playground(playground_layers)
     return net
 
 

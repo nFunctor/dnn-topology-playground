@@ -19,6 +19,9 @@ parser.add_argument('--input_size', default=32, type=int)
 parser.add_argument('--filtration', default='nominal')
 parser.add_argument('--permute_labels', default=0, type=float)
 parser.add_argument('--binarize_labels', default=-1, type=int)
+parser.add_argument('--playground_layers', nargs='+', type=int)
+parser.add_argument('--dim', type=int, default=4)
+parser.add_argument('--row_count', type=int, default=1024)
 
 args = parser.parse_args()
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -33,7 +36,7 @@ if not os.path.exists(SAVE_DIR):
 
 # Build models
 print('==> Building model..')
-net = get_model(args.net, args.dataset)
+net = get_model(args.net, args.dataset, args.playground_layers)
 net = net.to(device)
     
 if device == 'cuda':
@@ -55,7 +58,7 @@ for epoch in args.epochs:
     net.load_state_dict(checkpoint['net'])
     
     ''' Define passer and get activations '''
-    functloader = loader(args.dataset+'_test', batch_size=100, subset=list(range(0, 1000)), row_count = 1024, dim=2)
+    functloader = loader(args.dataset+'_test', batch_size=100, subset=list(range(0, 1000)), row_count = args.row_count, dim=args.dim)
     passer = Passer(net, functloader, criterion, device)
     passer_test = Passer(net, functloader, criterion, device)
     passer_test.run(manipulator=manipulator)
