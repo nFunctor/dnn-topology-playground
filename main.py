@@ -53,7 +53,7 @@ if args.build_graph:
                   args.dataset+' --trial '+args.trial+' --epochs '+args.epochs_test+' --filtration '+args.filtration+
                   ' --split '+args.split+' --kl '+args.kl+' --permute_labels '+args.permute_labels+' --binarize_labels '+args.binarize_labels+
                   ' --dim ' + args.random_data_dim + ' --row_count ' + args.random_data_row_count +
-                  ' --playground_layers ' + args.playground_layers
+                  ' --playground_layers ' + " ".join(args.playground_layers)
                   )
     elif args.graph_type == 'functional_big_networks':
         os.system('python ./build_graph_functional_big_networks.py --save_path '+SAVE_PATH+' --net '+args.net+
