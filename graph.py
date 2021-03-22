@@ -11,7 +11,8 @@ import scipy.stats
 from sklearn import preprocessing 
 import time
 import pymetis
-import itertools    
+import itertools
+from scipy.stats import wasserstein_distance
 
 def correlation(x, y):
     return np.corrcoef(x,y)[0,1]
@@ -75,33 +76,43 @@ def binarize(M, binarize_t):
     M[M<=binarize_t] = 0
     
     return M
-    
+
+
+def wasser(xarr, yarr):
+    return wasserstein_distance(xarr, yarr)
+
+
+def corrmetric(xarr, yarr):
+    return np.sqrt(1 - np.abs(np.nan_to_num(np.corrcoef(xarr, yarr)[0, 1])))
+
 
 def adjacency(signals, metric=None):
     '''
     Build matrix A  of dimensions nxn where a_{ij} = metric(a_i, a_j).
-    signals: nxm matrix where each row (signal[k], k=range(n)) is a signal. 
+    signals: nxm matrix where each row (signal[k], k=range(n)) is a signal.
     metric: a function f(.,.) that takes two 1D ndarrays and outputs a single real number (e.g correlation, KL divergence etc).
     '''
-    
+
     ''' Get input dimensions '''
     signals = np.reshape(signals, (signals.shape[0], -1))
 
-    ''' If no metric provided fast-compute correlation  '''
+    ''' If no metric provided fast-compute square root of 1-correlation  '''
     if not metric:
-        return np.sqrt(1-np.abs(np.nan_to_num(np.corrcoef(signals))))
-        
+        # return np.abs(np.nan_to_num(np.corrcoef(signals)))
+        return np.sqrt(1 - np.abs(np.nan_to_num(np.corrcoef(signals))))
+
     n, m = signals.shape
     A = np.zeros((n, n))
 
     for i in range(n):
-        for j in range(i+1,n):
-            A[i,j] = metric(signals[i], np.transpose(signals[j]))
-
+        for j in range(i + 1, n):
+            #            A[i,j] = metric(signals[i], np.transpose(signals[j]))
+            A[i, j] = metric(signals[i], signals[j])
+            print(i, j, A[i, j])
     ''' Normalize '''
-    #A = robust_scaler(A)
-            
-    return np.abs(np.nan_to_num(A))
+    A = A + np.transpose(A)
+
+    return np.nan_to_num(A)
 
 
 def minmax_scaler(A):

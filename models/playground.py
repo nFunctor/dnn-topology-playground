@@ -32,9 +32,9 @@ class Playground(nn.Module):
 
 
 def test():
-    net = Playground(layer_dims=[2, 3, 1])
+    net = Playground(layer_dims=[2, 3, 2])
     print(net)
-    x = torch.randn(1, 2)
+    x = torch.randn(100, 2)
     y = net(x)
     print(y.size())
 
