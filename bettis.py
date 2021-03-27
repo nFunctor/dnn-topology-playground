@@ -2,6 +2,9 @@ __author__ = 'cipriancorneanu'
 
 import numpy as np
 import array
+import os
+import pickle as pkl
+from config import SAVE_PATH
 
 
 def read_bin(fname):
@@ -192,24 +195,32 @@ def compute_node_importance(net, dataset, epcs, trl):
 
 
 def get_data(root, nets, datasets, trials, epcs):
-    n_nodes = {'mlp_300_100': 400, 'mlp_300_200_100': 600, 'conv_2': 650, 'conv_4': 906, 'alexnet': 1162, 'conv_6': 1418,
-           'resnet18': 1736, 'vgg16': 1930, 'resnet34': 1736, 'resnet50': 6152}
-
     pts = []
     for i_net, net in enumerate(nets):
         for i_dataset, dataset in enumerate(datasets):
-            directory = root + net + '_' + dataset + '/'
+            directory = os.path.join(
+                root,
+                SAVE_PATH,
+                net + '_' + dataset
+            )
             if os.path.exists(directory):
                 for i, epc in enumerate(epcs):
                     # If file exists, read and plot
                     for trial in trials:
-                        if os.path.exists(directory + 'adj_epc' + str(epc) + '_trl{}_0.4.bin.out'.format(trial)):
+                        if os.path.exists(os.path.join(
+                                directory,
+                                'adj_epc' + str(epc) + '_trl{}_0.4.bin.out'.format(trial)
+                        )):
                             # read data
-                            data = read_results(directory, epc, trl=trial, dim=1, persistence=0.02)
+                            data = read_results(directory + "/", epc, trl=trial, dim=1, persistence=0.02)
                             if len(data) > 0:
                                 x_ref = np.linspace(0.05, 0.4, 200)
                                 # read generalization gap
-                                with open(root + 'losses/' + net + '_' + dataset + '/stats_trial_' + str(trial) + '.pkl',
+                                with open(os.path.join(
+                                        root,
+                                        'losses',
+                                        net + '_' + dataset,
+                                        'stats_trial_' + str(trial) + '.pkl'),
                                           'rb') as f:
                                     loss = pkl.load(f)
 

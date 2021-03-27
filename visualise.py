@@ -42,4 +42,11 @@ for epc in args.epochs:
     else:
         print('The persistence diagram is empty!')
 
+get_data(
+    ".",
+    [args.net],
+    [args.dataset],
+    [args.trial],
+    args.epochs
+)
 plt.show()
