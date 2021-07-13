@@ -7,3 +7,4 @@ losses/
 venv/
 /openmpi-4.0.4
 .idea/
+results_dnn_topology/

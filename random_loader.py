@@ -2,7 +2,7 @@ from torch.utils.data import TensorDataset, DataLoader
 import torch
 
 def get_random_loader(row_count: int, dim: int) -> DataLoader:
-    random_points = torch.rand(row_count * dim).view((row_count, dim))
+    random_points = (1-2*torch.rand(row_count * dim)).view((row_count, dim))
     return DataLoader(
         TensorDataset(
             random_points,
@@ -13,3 +13,6 @@ def get_random_loader(row_count: int, dim: int) -> DataLoader:
             )
         )
     )
+
+#if you ever want to test
+#print(get_random_loader(3,4).dataset[1])
