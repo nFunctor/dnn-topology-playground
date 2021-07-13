@@ -15,10 +15,11 @@ class Playground(nn.Module):
             )
             if (i < layer_count-1):
                 layers.append(torch.nn.ReLU())
+                self.layers.append(torch.nn.Sequential(*layers))
             else:
                 layers.append(torch.nn.Softmax(dim=1))
 
-            self.layers.append(torch.nn.Sequential(*layers))
+            #self.layers.append(torch.nn.Sequential(*layers))
         self.net = torch.nn.Sequential(*layers)
 
     def forward(self, x):

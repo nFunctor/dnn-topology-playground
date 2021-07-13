@@ -12,6 +12,7 @@ from sklearn import preprocessing
 import time
 import pymetis
 import itertools
+from scipy import spatial
 from scipy.stats import wasserstein_distance
 
 def correlation(x, y):
@@ -85,8 +86,22 @@ def wasser(xarr, yarr):
 def corrmetric(xarr, yarr):
     return np.sqrt(1 - np.abs(np.nan_to_num(np.corrcoef(xarr, yarr)[0, 1])))
 
+#def l2metric(xarr,yarr):
+#    return np.linalg.norm(xarr-yarr)
 
-def adjacency(signals, metric=None):
+def spl2metric_rough(signals):
+    '''Non-normalised L2 metric'''
+    return scipy.spatial.distance.squareform(scipy.spatial.distance.pdist(signals))
+
+def spl2metricmax(signals):
+    '''Non-normalised L2 metric'''
+    return minmax_scaler(spl2metric_rough(signals))
+def spl2metricstd(signals):
+    '''Non-normalised L2 metric'''
+    return np.nan_to_num(standard_scaler(spl2metric_rough(signals)))
+
+
+def adjacency(signals, metric=spl2metricstd):
     '''
     Build matrix A  of dimensions nxn where a_{ij} = metric(a_i, a_j).
     signals: nxm matrix where each row (signal[k], k=range(n)) is a signal.
@@ -100,19 +115,20 @@ def adjacency(signals, metric=None):
     if not metric:
         # return np.abs(np.nan_to_num(np.corrcoef(signals)))
         return np.sqrt(1 - np.abs(np.nan_to_num(np.corrcoef(signals))))
+    else:
+    #n, m = signals.shape
+    #A = np.zeros((n, n))
+        A = metric(signals)
 
-    n, m = signals.shape
-    A = np.zeros((n, n))
-
-    for i in range(n):
-        for j in range(i + 1, n):
+   # for i in range(n):
+   #     for j in range(i + 1, n):
             #            A[i,j] = metric(signals[i], np.transpose(signals[j]))
-            A[i, j] = metric(signals[i], signals[j])
-            print(i, j, A[i, j])
-    ''' Normalize '''
-    A = A + np.transpose(A)
+   #         A[i, j] = metric(signals[i], signals[j])
+   #         print(i, j, A[i, j])
+   # ''' Normalize '''
+   # A = A + np.transpose(A)
 
-    return np.nan_to_num(A)
+        return np.nan_to_num(A)
 
 
 def minmax_scaler(A):

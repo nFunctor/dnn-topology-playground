@@ -6,7 +6,7 @@ DIPHA_MAGIC_NUMBER = 8067171840
 ID = 7
 
 #  Sets upper limit for epsilon range in sparse distance matrix computation
-MAX_EPSILON = 0.4
+MAX_EPSILON = 0.5
 
 # Number of cores MPI can use
 NPROC = 4
