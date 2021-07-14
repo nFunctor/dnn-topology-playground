@@ -94,14 +94,21 @@ def spl2metric_rough(signals):
     return scipy.spatial.distance.squareform(scipy.spatial.distance.pdist(signals))
 
 def spl2metricmax(signals):
-    '''Non-normalised L2 metric'''
+    '''L2 metric normalised by maximum division'''
     return minmax_scaler(spl2metric_rough(signals))
 def spl2metricstd(signals):
-    '''Non-normalised L2 metric'''
+    '''Mean-std normalised L2-metric, not meaningful'''
     return np.nan_to_num(standard_scaler(spl2metric_rough(signals)))
 
+def corrmetric_eucl(signals):
+    '''Compute the metric induced from correlation, without absolute value, passes by normalising signals'''
+    x = np.array(signals)
+    x = x - x.mean(1).reshape(x.shape[0], -1) ## substract averages
+    x = np.nan_to_num(x/x.std(1).reshape(x.shape[0], -1)) ## divide by std and fix constant distributions by putting zeroes
+ ## compute metric
+    return scipy.spatial.distance.squareform(scipy.spatial.distance.pdist(x))/(2*np.sqrt(2*x.shape[1]))
 
-def adjacency(signals, metric=spl2metricstd):
+def adjacency(signals, metric=corrmetric_eucl):
     '''
     Build matrix A  of dimensions nxn where a_{ij} = metric(a_i, a_j).
     signals: nxm matrix where each row (signal[k], k=range(n)) is a signal.
@@ -132,7 +139,8 @@ def adjacency(signals, metric=spl2metricstd):
 
 
 def minmax_scaler(A):
-    A = (A - A.min())/A.max()
+    #A = (A - A.min())/A.max() -- does not make much sense since working with metric...
+    A = A / A.max()
     return A
 
 

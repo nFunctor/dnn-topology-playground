@@ -43,7 +43,7 @@ if args.train:
     os.system('python ./train.py --net '+args.net+' --dataset '+args.dataset+' --trial '+args.trial+' --epochs '+
               args.n_epochs_train+' --lr '+args.lr+' --permute_labels '+args.permute_labels+' --subset '+args.data_subset+
               ' --binarize_labels '+args.binarize_labels+' --dim '+args.random_data_dim+' --row_count '+args.random_data_row_count+
-              ' --playground_layers ' + " ".join(args.playground_layers)#str([int(s) for s in args.playground_layers])[1:-1]
+              ' --playground_layers ' + " ".join(args.playground_layers)
               )
 
 if args.build_graph:

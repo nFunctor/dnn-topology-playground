@@ -64,7 +64,7 @@ results in a specific format.
 For visualising the first betti curve, run:
 
 ```
-python visualize.py --trial 0 --net lenet --dataset mnist --epochs 0 1 3 5 7 10 30 --dim 1
+python visualise.py --trial 0 --net lenet --dataset mnist --epochs 0 1 3 5 7 10 30 --dim 1
 
 ```
 
