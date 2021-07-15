@@ -101,14 +101,19 @@ def spl2metricstd(signals):
     return np.nan_to_num(standard_scaler(spl2metric_rough(signals)))
 
 def corrmetric_eucl(signals):
-    '''Compute the metric induced from correlation, without absolute value, passes by normalising signals'''
-    x = np.array(signals)
+    '''Compute the metric induced from correlation, without absolute value, passes by normalising signals; convert to double to improve calculus'''
+    x = np.array(signals).astype(np.double)
     x = x - x.mean(1).reshape(x.shape[0], -1) ## substract averages
     x = np.nan_to_num(x/x.std(1).reshape(x.shape[0], -1)) ## divide by std and fix constant distributions by putting zeroes
  ## compute metric
-    return scipy.spatial.distance.squareform(scipy.spatial.distance.pdist(x))/(2*np.sqrt(2*x.shape[1]))
+    return (scipy.spatial.distance.squareform(scipy.spatial.distance.pdist(x)))/(np.sqrt(2*x.shape[1]))
 
-def adjacency(signals, metric=corrmetric_eucl):
+def corrmetric_abs(signals):
+    '''Returns square root of 1- absolute value of the correlation'''
+    M = corrmetric_eucl(signals)
+    return np.sqrt(1-np.abs(1-M**2))
+
+def adjacency(signals, metric=corrmetric_abs):
     '''
     Build matrix A  of dimensions nxn where a_{ij} = metric(a_i, a_j).
     signals: nxm matrix where each row (signal[k], k=range(n)) is a signal.
@@ -135,7 +140,7 @@ def adjacency(signals, metric=corrmetric_eucl):
    # ''' Normalize '''
    # A = A + np.transpose(A)
 
-        return np.nan_to_num(A)
+        return A
 
 
 def minmax_scaler(A):
