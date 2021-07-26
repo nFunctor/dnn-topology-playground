@@ -7,6 +7,9 @@ from loaders import *
 from graph import *
 from labels import load_manipulator
 
+import numpy as np
+import os
+
 parser = argparse.ArgumentParser(description='PyTorch CIFAR10 Training')
 parser.add_argument('--net')
 parser.add_argument('--dataset')
@@ -64,9 +67,20 @@ for epoch in args.epochs:
     passer_test.run(manipulator=manipulator)
     activs = passer.get_function()
     activs = signal_concat(activs)
+
+    if not os.path.exists("plot"):
+        os.makedirs("plot")
+
+    np.save(os.path.join("plot", f"activations_epoch_{epoch}"), np.array(activs))
+    print(f"Activations saved as activations_epoch_{epoch}")
+
     adj = adjacency(activs)
+
     print('The dimension of the adjacency matrix is {}'.format(adj.shape))
     print('Adj mean {}, min {}, max {}'.format(np.mean(adj), np.min(adj), np.max(adj)))
+
+    np.save(os.path.join("plot", f"distances_epoch_{epoch}"), adj)
+    print(f"Distances saved as distances_epoch_{epoch}")
 
     ''' Write adjacency to binary. To use as DIPHA input for persistence homology '''
     save_dipha(SAVE_DIR + 'adj_epc{}_trl{}.bin'.format(epoch, args.trial), adj)
