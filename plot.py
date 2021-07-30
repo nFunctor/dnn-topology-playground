@@ -4,7 +4,7 @@ import numpy as np
 #%%
 
 ncomp = 3 ##dimension of MDS, for now only 3 is implemented
-epoch1 = 30
+epoch1 =1
 epoch2 = 50
 #%%
 

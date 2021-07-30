@@ -52,7 +52,7 @@ class LeNet(nn.Module):
         x2 = x2.view(-1, self.feat_size)
         x3 = F.relu(self.fc1(x2))
         x4 = F.log_softmax(self.fc2(x3), dim=1)
-        return [x1, x2, x3, x4]
+        return [x1, x2, x3]
 
     def forward_param_features(self, x):
         return self.forward_features(x)
