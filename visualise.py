@@ -25,7 +25,7 @@ for epc in args.epochs:
         x, betti = pd2betti(birth, death)
 
         #  filter curve for improved visualization
-        filter_size = int(len(betti) /4)
+        filter_size = int(len(betti) /2)
         betti = scipy.ndimage.filters.uniform_filter1d(betti, size=filter_size, mode='constant')
 
         # plor curve

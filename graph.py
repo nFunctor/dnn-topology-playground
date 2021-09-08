@@ -113,7 +113,7 @@ def corrmetric_abs(signals):
     M = corrmetric_eucl(signals)
     return np.sqrt(1-np.abs(1-M**2))
 
-def adjacency(signals, metric=corrmetric_abs):
+def adjacency(signals, metric=corrmetric_eucl):
     '''
     Build matrix A  of dimensions nxn where a_{ij} = metric(a_i, a_j).
     signals: nxm matrix where each row (signal[k], k=range(n)) is a signal.

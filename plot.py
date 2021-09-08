@@ -1,11 +1,18 @@
+#%% md
+
+
+
+#%%
+
 from sklearn.manifold import MDS
 import numpy as np
 
 #%%
 
-ncomp = 3 ##dimension of MDS, for now only 3 is implemented
-epoch1 =1
+ncomp = 3 ## the dimension of MDS, for now only 3 is implemented
+epoch1 = 50
 epoch2 = 50
+
 #%%
 
 embedding=MDS(n_components=3)
@@ -13,16 +20,24 @@ embedding=MDS(n_components=3)
 #%%
 
 activs1 = np.load(f"plot/activations_epoch_{epoch1}.npy")
-activs2 = np.load(f"plot/activations_epoch_{epoch2}.npy")
-c=activs1.shape[0]
+#activs2 = np.load(f"plot/activations_epoch_{epoch2}.npy")
+#c=activs1.shape[0]
+
+# Currently trying to draw three-layer networks
+c = 128
+
+#%%
+
 
 
 #%%
 
 
-t = np.concatenate((np.array(activs1).astype(np.double),np.array(activs2).astype(np.double)),axis=0)
+# If you are comparing different epochs
+#t = np.concatenate((np.array(activs1).astype(np.double),np.array(activs2).astype(np.double)),axis=0)
+t = np.array(activs1).astype(np.double)
 
-#Only if you are willing to center the activations
+# Only if you are willing to center the activations
 
 #t = t - t.mean(1).reshape(t.shape[0], -1) ## substract averages
 #t = np.nan_to_num(t/t.std(1).reshape(t.shape[0], -1))
@@ -46,10 +61,16 @@ x1 = t[0:c,0]
 y1 = t[0:c,1]
 z1 = t[0:c,2]
 
-x2 = t[c:,0]
-y2 = t[c:,1]
-z2 = t[c:,2]
+x2 = t[c:2*c, 0]
+y2 = t[c:2*c, 1]
+z2 = t[c:2*c, 2]
+
+x3 = t[2*c:, 0]
+y3 = t[2*c:, 1]
+z3 = t[2*c:, 2]
+
 ax.scatter(x1,y1,z1)
 ax.scatter(x2,y2,z2)
+ax.scatter(x3,y3,z3)
 
 pyplot.show()

@@ -7,7 +7,7 @@ def get_random_loader(row_count: int, dim: int) -> DataLoader:
         TensorDataset(
             random_points,
             torch.where(
-                random_points.pow(2).sum(axis=1) < 1,
+                ((random_points.pow(2).sum(axis=1) < 1) & (random_points.pow(2).sum(axis=1) > 0.4)),
                 torch.ones(row_count, dtype=torch.long),
                 torch.zeros(row_count, dtype=torch.long)
             )

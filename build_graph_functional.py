@@ -6,6 +6,7 @@ from passers import Passer
 from loaders import *
 from graph import *
 from labels import load_manipulator
+from sklearn.manifold import MDS
 
 import numpy as np
 import os
@@ -74,6 +75,12 @@ for epoch in args.epochs:
     np.save(os.path.join("plot", f"activations_epoch_{epoch}"), np.array(activs))
     print(f"Activations saved as activations_epoch_{epoch}")
 
+    # What follows performs a MDS on the activation values to see how it impacts homology, done very badly
+
+
+    #embedding = MDS(n_components=3)
+    #activs = embedding.fit_transform(activs.astype(np.double))
+
     adj = adjacency(activs)
 
     print('The dimension of the adjacency matrix is {}'.format(adj.shape))
@@ -81,6 +88,8 @@ for epoch in args.epochs:
 
     np.save(os.path.join("plot", f"distances_epoch_{epoch}"), adj)
     print(f"Distances saved as distances_epoch_{epoch}")
+
+
 
     ''' Write adjacency to binary. To use as DIPHA input for persistence homology '''
     save_dipha(SAVE_DIR + 'adj_epc{}_trl{}.bin'.format(epoch, args.trial), adj)
