@@ -24,7 +24,7 @@ activs1 = np.load(f"plot/activations_epoch_{epoch1}.npy")
 #c=activs1.shape[0]
 
 # Currently trying to draw three-layer networks
-c = 128
+c = 256
 
 #%%
 
