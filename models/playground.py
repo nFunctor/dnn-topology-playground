@@ -26,19 +26,26 @@ class Playground(nn.Module):
         return self.net(x)
 
     def forward_features(self, x):
+
         return [layer(x) for layer in self.layers]
+
+        # If you want to check a particular layer, might do the following:
+        #layer = self.layers[1]
+        #layer2 = self.layers[2]
+        #return [layer(x), layer2(x)]
 
     def forward_param_features(self, x):
         return self.forward_features(x)
 
 
 def test():
-    net = Playground(layer_dims=[2, 3, 2])
-    print(net)
+    net = Playground(layer_dims=[2, 256, 256, 2])
+    #print(net)
     x = torch.randn(100, 2)
     y = net(x)
-    print(y.size())
+    #print(y.size())
 
+    print(net.layers[0])
     for i, layer in enumerate(net.forward_features(x)):
         print('layer {} has size {}'.format(i, layer.shape))
 

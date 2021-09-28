@@ -26,8 +26,6 @@ activs1 = np.load(f"plot/activations_epoch_{epoch1}.npy")
 # Currently trying to draw three-layer networks
 c = 256
 
-#%%
-
 
 
 #%%
@@ -42,11 +40,18 @@ t = np.array(activs1).astype(np.double)
 #t = t - t.mean(1).reshape(t.shape[0], -1) ## substract averages
 #t = np.nan_to_num(t/t.std(1).reshape(t.shape[0], -1))
 
+#%%
+# To add a coordinate perturbation, do this
+#pert = np.random.randn([3,*np.transpose(t).shape[0]])
+#print([ncomp,t.shape[1]])
+pert = np.random.randn(t.shape[1],ncomp)
+epsilon =  np.matmul(t,pert)
+
 
 #%%
 
 t = embedding.fit_transform(t)
-t.shape
+#t = t + epsilon
 
 #%%
 
