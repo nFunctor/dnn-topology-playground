@@ -47,6 +47,7 @@ class LeNet(nn.Module):
         return x4
     
     def forward_features(self, x):
+        '''Dimensions for the MNIST dataset: dim x = 784=28x28, dim x1 = 1440, dim x2 = 320, dim x3 = 50, dim x4 = 10'''
         x1 = F.relu(F.max_pool2d(self.conv1(x), 2))
         x2 = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x1)), 2))
         x2 = x2.view(-1, self.feat_size)

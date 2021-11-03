@@ -99,6 +99,9 @@ def spl2metricmax(signals):
 def spl2metricstd(signals):
     '''Mean-std normalised L2-metric, not meaningful'''
     return np.nan_to_num(standard_scaler(spl2metric_rough(signals)))
+def spl2metricrobust(signals):
+    return np.nan_to_num(robust_scaler(spl2metric_rough(signals)))
+
 
 def corrmetric_eucl(signals):
     '''Compute the metric induced from correlation, without absolute value, passes by normalising signals; convert to double to improve calculus'''
@@ -113,7 +116,7 @@ def corrmetric_abs(signals):
     M = corrmetric_eucl(signals)
     return np.sqrt(1-np.abs(1-M**2))
 
-def adjacency(signals, metric=corrmetric_eucl):
+def adjacency(signals, metric=corrmetric_abs):
     '''
     Build matrix A  of dimensions nxn where a_{ij} = metric(a_i, a_j).
     signals: nxm matrix where each row (signal[k], k=range(n)) is a signal.

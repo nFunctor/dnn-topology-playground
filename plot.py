@@ -10,7 +10,7 @@ import numpy as np
 #%%
 
 ncomp = 3 ## the dimension of MDS, for now only 3 is implemented
-epoch1 = 50
+epoch1 = 100
 epoch2 = 50
 
 #%%
@@ -23,8 +23,10 @@ activs1 = np.load(f"plot/activations_epoch_{epoch1}.npy")
 #activs2 = np.load(f"plot/activations_epoch_{epoch2}.npy")
 #c=activs1.shape[0]
 
-# Currently trying to draw three-layer networks
-c = 256
+# Currently trying to draw multiple-layer networks, here is a constant that separates layers
+c_1 = 256
+c_2 = 256 + c_1
+
 
 
 
@@ -62,17 +64,17 @@ from mpl_toolkits.mplot3d import Axes3D
 
 fig=pyplot.figure()
 ax=Axes3D(fig)
-x1 = t[0:c,0]
-y1 = t[0:c,1]
-z1 = t[0:c,2]
+x1 = t[0:c_1,0]
+y1 = t[0:c_1,1]
+z1 = t[0:c_1,2]
 
-x2 = t[c:2*c, 0]
-y2 = t[c:2*c, 1]
-z2 = t[c:2*c, 2]
+x2 = t[c_1:c_2, 0]
+y2 = t[c_1:c_2, 1]
+z2 = t[c_1:c_2, 2]
 
-x3 = t[2*c:, 0]
-y3 = t[2*c:, 1]
-z3 = t[2*c:, 2]
+x3 = t[c_2:, 0]
+y3 = t[c_2:, 1]
+z3 = t[c_2:, 2]
 
 ax.scatter(x1,y1,z1)
 ax.scatter(x2,y2,z2)
