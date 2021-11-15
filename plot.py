@@ -10,8 +10,8 @@ import numpy as np
 #%%
 
 ncomp = 3 ## the dimension of MDS, for now only 3 is implemented
-epoch1 = 100
-epoch2 = 50
+epoch1 = 201
+#epoch2 = 800
 
 #%%
 
@@ -21,14 +21,15 @@ embedding=MDS(n_components=3)
 
 activs1 = np.load(f"plot/activations_epoch_{epoch1}.npy")
 #activs2 = np.load(f"plot/activations_epoch_{epoch2}.npy")
-#c=activs1.shape[0]
+c_1=activs1.shape[0]
 
 # Currently trying to draw multiple-layer networks, here is a constant that separates layers
-c_1 = 256
-c_2 = 256 + c_1
+c_1 = 64
+c_2 = 64
+#c_3 = 128
 
-
-
+c_2 = c_2 + c_1
+#c_3 = c_3 + c_2
 
 #%%
 
@@ -36,6 +37,7 @@ c_2 = 256 + c_1
 # If you are comparing different epochs
 #t = np.concatenate((np.array(activs1).astype(np.double),np.array(activs2).astype(np.double)),axis=0)
 t = np.array(activs1).astype(np.double)
+
 
 # Only if you are willing to center the activations
 
@@ -52,8 +54,13 @@ epsilon =  np.matmul(t,pert)
 
 #%%
 
+
+#t = t - t.mean(1).reshape(t.shape[0], -1) ## substract averages
+#t = np.nan_to_num(t/t.std(1).reshape(t.shape[0], -1))
+
 t = embedding.fit_transform(t)
 #t = t + epsilon
+
 
 #%%
 
@@ -76,8 +83,15 @@ x3 = t[c_2:, 0]
 y3 = t[c_2:, 1]
 z3 = t[c_2:, 2]
 
+
+#x4 = t[c_3:, 0]
+#y4 = t[c_3:, 1]
+#z4 = t[c_3:, 2]
+
 ax.scatter(x1,y1,z1)
 ax.scatter(x2,y2,z2)
 ax.scatter(x3,y3,z3)
+#ax.scatter(x4,y4,z4)
+
 
 pyplot.show()

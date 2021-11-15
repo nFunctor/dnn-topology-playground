@@ -62,7 +62,7 @@ for epoch in args.epochs:
     net.load_state_dict(checkpoint['net'])
     
     ''' Define passer and get activations '''
-    functloader = loader(args.dataset+'_test', batch_size=100, subset=list(range(0, 1000)), row_count = 1024, dim=args.dim)
+    functloader = loader(args.dataset+'_test', batch_size=100, subset=list(range(0, 1000)), row_count = args.row_count, dim=args.dim)
     passer = Passer(net, functloader, criterion, device)
     passer_test = Passer(net, functloader, criterion, device)
     passer_test.run(manipulator=manipulator)
