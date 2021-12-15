@@ -67,12 +67,14 @@ for epoch in args.epochs:
     passer_test = Passer(net, functloader, criterion, device)
     passer_test.run(manipulator=manipulator)
     activs = passer.get_function()
+    layer_dims = [i.shape[1] for i in activs]
     activs = signal_concat(activs)
 
     if not os.path.exists("plot"):
         os.makedirs("plot")
 
-    np.save(os.path.join("plot", f"activations_epoch_{epoch}"), np.array(activs))
+    np.savez(os.path.join("plot", f"activations_epoch_{epoch}"), layer_dims = layer_dims, activs = np.array(activs))
+    #np.save(os.path.join("plot", f"activations_epoch_{epoch}"), np.array(activs))
     print(f"Activations saved as activations_epoch_{epoch}")
 
     # What follows performs a MDS on the activation values to see how it impacts homology, done very badly

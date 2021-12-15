@@ -7,11 +7,12 @@ from mpl_toolkits.mplot3d import Axes3D
 from sklearn.manifold import MDS
 
 
-def main(epochs: int, layer_sizes: List[int]) -> None:
+def main(epochs: int) -> None:
     """show plots"""
-    activations = np.load(f"plot/activations_epoch_{epochs}.npy")
+    activations = np.load(f"plot/activations_epoch_{epochs}.npz")
+    layer_sizes = activations["layer_dims"]
     transformed_activations = MDS(n_components=3).fit_transform(
-        np.array(activations).astype(np.double)
+        np.array(activations["activs"]).astype(np.double)
     )
     fig = pyplot.figure()
     axis = Axes3D(fig, auto_add_to_figure=False)
@@ -29,4 +30,4 @@ def main(epochs: int, layer_sizes: List[int]) -> None:
 
 
 if __name__ == "__main__":
-    main(100, [64, 64, 64])
+    main(1)
