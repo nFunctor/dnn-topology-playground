@@ -19,7 +19,7 @@ import gudhi
 print("#####################################################################")
 print("RipsComplex creation from points")
 
-epoch = 201
+epoch = 10
 
 
 activs = np.load(f"plot/activations_epoch_{epoch}.npy")
@@ -36,7 +36,7 @@ t = np.array(activs).astype(np.double)
 t = t - t.mean(1).reshape(t.shape[0], -1) ## substract averages
 t = np.nan_to_num(t/t.std(1).reshape(t.shape[0], -1))
 
-t = t[0:128, ]
+#t = t[0:128, ]
 
 rips = gudhi.RipsComplex(points=t, max_edge_length=420)
 

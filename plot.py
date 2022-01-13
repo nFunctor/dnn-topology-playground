@@ -15,7 +15,7 @@ def main(epochs: int) -> None:
         np.array(activations["activs"]).astype(np.double)
     )
     fig = pyplot.figure()
-    axis = Axes3D(fig, auto_add_to_figure=False)
+    axis = Axes3D(fig)
     for i in range(1, len(layer_sizes) + 1):
         layer_activations = transformed_activations[
             sum(layer_sizes[: i - 1]) : sum(layer_sizes[:i]), :
@@ -28,6 +28,27 @@ def main(epochs: int) -> None:
     fig.add_axes(axis)
     pyplot.show()
 
+def plot2d(epochs: int) -> None:
+    """show plots"""
+    activations = np.load(f"plot/activations_epoch_{epochs}.npz")
+    layer_sizes = activations["layer_dims"]
+    transformed_activations = MDS(n_components=2).fit_transform(
+        np.array(activations["activs"]).astype(np.double)
+    )
+
+    #fig = pyplot.figure()
+    #axis = Axes3D(fig, auto_add_to_figure=False)
+    for i in range(1, len(layer_sizes) + 1):
+        layer_activations = transformed_activations[
+            sum(layer_sizes[: i - 1]) : sum(layer_sizes[:i]), :
+        ]
+        pyplot.scatter(
+            layer_activations[:, 0],
+            layer_activations[:, 1],
+    #        layer_activations[:, 2],
+        )
+    #fig.add_axes(axis)
+    pyplot.show()
 
 if __name__ == "__main__":
-    main(1)
+    main(200)

@@ -19,8 +19,8 @@ class Playground(nn.Module):
                 self.layers.append(torch.nn.Sequential(*layers))
             else:
                 layers.append(torch.nn.Softmax(dim=1))
+                self.layers.append(torch.nn.Sequential(*layers))
 
-            #self.layers.append(torch.nn.Sequential(*layers))
         self.net = torch.nn.Sequential(*layers)
 
     def forward(self, x):
@@ -31,7 +31,7 @@ class Playground(nn.Module):
         x = x.view(-1,self.layer_dims[0])
         return [layer(x) for layer in self.layers]
 
-        # If you want to check a particular layer, might do the following:
+        # If you want to check a particular layer, might do the following:cd
         #layer = self.layers[1]
         #layer2 = self.layers[2]
         #return [layer(x)]
