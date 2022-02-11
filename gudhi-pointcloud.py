@@ -22,9 +22,9 @@ print("RipsComplex creation from points")
 epoch = 10
 
 
-activs = np.load(f"plot/activations_epoch_{epoch}.npy")
+activs = np.load(f"plot/activations_epoch_{epoch}.npz")
 dist = np.load(f"plot/distances_epoch_{epoch}.npy")
-t = np.array(activs).astype(np.double)
+t = np.array(activs["activs"]).astype(np.double)
 
 #t = np.random.randn(192, 1024)
 
