@@ -19,7 +19,7 @@ import gudhi
 print("#####################################################################")
 print("RipsComplex creation from points")
 
-epoch = 10
+epoch = 101
 
 
 activs = np.load(f"plot/activations_epoch_{epoch}.npz")
@@ -33,12 +33,12 @@ t = np.array(activs["activs"]).astype(np.double)
 
 # Only if you are willing to center the activations
 
-t = t - t.mean(1).reshape(t.shape[0], -1) ## substract averages
-t = np.nan_to_num(t/t.std(1).reshape(t.shape[0], -1))
+#t = t - t.mean(1).reshape(t.shape[0], -1) ## substract averages
+#t = np.nan_to_num(t/t.std(1).reshape(t.shape[0], -1))
 
 #t = t[0:128, ]
 
-rips = gudhi.RipsComplex(points=t, max_edge_length=420)
+rips = gudhi.RipsComplex(points=t, max_edge_length=42)
 
 #rips = gudhi.RipsComplex(distance_matrix=dist, max_edge_length=100)
 

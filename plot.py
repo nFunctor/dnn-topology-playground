@@ -32,7 +32,11 @@ def plot2d(epochs: int) -> None:
     """show plots"""
     activations = np.load(f"plot/activations_epoch_{epochs}.npz")
     layer_sizes = activations["layer_dims"]
+ #   t = np.array(activations["activs"]).astype(np.double)
+ #   t = t - t.mean(1).reshape(t.shape[0], -1) ## substract averages
+ #   t = np.nan_to_num(t/t.std(1).reshape(t.shape[0], -1))
     transformed_activations = MDS(n_components=2).fit_transform(
+   #     t
         np.array(activations["activs"]).astype(np.double)
     )
 
@@ -51,4 +55,5 @@ def plot2d(epochs: int) -> None:
     pyplot.show()
 
 if __name__ == "__main__":
-    main(200)
+   # main(103)
+    plot2d(101)
