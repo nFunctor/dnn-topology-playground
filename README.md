@@ -1,3 +1,15 @@
+# PRIVATE REPO README
+
+DIPHA is disabled in current version, the steps 2 and 3 of the installation below are no longer necessary.
+
+An example of a script that works for the Playground network:
+
+python main.py --net playground --playground_layers 4 128 128 128 2 --dataset random --random_data_row_count 1024 --trial 0 --lr 0.0005  --n_epochs_train 100 --epochs_test "100" --graph_type functional --train 1 --build_graph 1
+
+(depending on your shell one might need to add '' around the layer dimensions)
+
+Tested with pyenv environment version 3.7.9.
+
 # DNN-TOPOLOGY
 
 We usually use a deep neural network (DNN) to learn a functional mapping between a set of inputs and a desired set of outputs. The aim of this corpus of work is to study the topology of this functional mapping and derive useful insights about learning properties of the network. We provide this code as a basis for computing topological descriptors of deep neural networks.

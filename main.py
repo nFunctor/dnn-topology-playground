@@ -71,6 +71,6 @@ if args.build_graph:
                   args.filtration+' --split '+args.split+ ' --subsplit '+args.subsplit+' --kl '+args.kl+' --permute_labels '+
                   args.permute_labels+' --binarize_labels '+args.binarize_labels+' --partition '+args.partition)
 
-visible_print('Computing topology')
-os.system('python ./compute_topology.py --save_path '+SAVE_PATH+' --net '+args.net+' --dataset '+args.dataset+' --epochs '+
-          args.epochs_test+' --trial '+ args.trial)
+visible_print('Computing topology is disabled, use Gudhi')
+#os.system('python ./compute_topology.py --save_path '+SAVE_PATH+' --net '+args.net+' --dataset '+args.dataset+' --epochs '+
+#          args.epochs_test+' --trial '+ args.trial)

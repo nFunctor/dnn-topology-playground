@@ -55,5 +55,5 @@ def plot2d(epochs: int) -> None:
     pyplot.show()
 
 if __name__ == "__main__":
-   # main(103)
+    main(101)
     plot2d(101)
