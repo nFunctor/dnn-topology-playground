@@ -1,11 +1,12 @@
 # PLAYGROUND NETWORK AND ITS HOMOLOGY
 
 This code is based on the [dnn-topology](https://github.com/cipriancorneanu/dnn-topology) 
-repository of Cirpian Corneanu (MIT License as explained in issues).
+repository of Cirpian Corneanu (MIT License as explained there in issues).
 
 Among the additions and changes are:
 
 -Introduction of playground neural network family and spherical synthetic data set random_loader.
+
 -Analysis of output via MDS (plot.py) and GUDHI (bottleneck.py and pointcloud.py). DIPHA is no 
 longer used, but most of the code related to it is intact.
 
