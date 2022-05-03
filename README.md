@@ -5,14 +5,14 @@ repository of Cirpian Corneanu (MIT License as explained there in issues).
 
 Among the additions and changes are:
 
--Introduction of playground neural network family and spherical synthetic data set random_loader.
+-Introduction of Playground neural network family and spherical synthetic data set random_loader.
 
 -Analysis of output via MDS (plot.py) and GUDHI (bottleneck.py and pointcloud.py). DIPHA is no 
 longer used, but most of the code related to it is intact.
 
 ## Setup
 
-DIPHA is disabled in current version, so to install the requirements it suffices to
+DIPHA is disabled in current version, so to install the requirements it is enough to
 ```
 pip install -r requirements.txt
 ```

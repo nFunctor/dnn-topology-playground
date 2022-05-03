@@ -1,23 +1,8 @@
-# This requires installing gudhi, to be added to requirements.txt later
-# To install manually, do pip install gudhi
 from sklearn.manifold import MDS
 import matplotlib.pyplot as plot
 import numpy as np
 import gudhi
 
-""" This file is part of the Gudhi Library - https://gudhi.inria.fr/ - which is released under MIT.
-    See file LICENSE or go to https://gudhi.inria.fr/licensing/ for full license details.
-    Author(s):       Vincent Rouvreau
-
-    Copyright (C) 2016 Inria
-
-    Modification(s):
-      - YYYY/MM Author: Description of the modification
-"""
-
-
-print("#####################################################################")
-print("RipsComplex creation from points")
 
 epoch = 101
 
